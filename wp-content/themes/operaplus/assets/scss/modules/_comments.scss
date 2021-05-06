@@ -1,0 +1,164 @@
+.comments {
+  .comment-reply-title {
+    @include title();
+  }
+
+  .comment-body {
+    border-bottom: 1px solid $brand-border;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    background-color: #F9F9F9;
+    border-radius: 3px;
+    padding: 10px;
+    color: $brand-gray;
+    font-weight: 300;
+
+    &:nth-of-type(2n) {
+      background-color: #eee;
+    }
+
+    p {
+      margin: 5px 0;
+      font-size: 1rem;
+    }
+
+    .reply {
+      text-align: right;
+
+      a {
+        @include btn-secondary();
+        font-size: .9rem;
+      }
+    }
+  }
+
+  .comment {
+    color: $brand-components;
+    font-weight: 700;
+
+    .comment-respond {
+      padding: 15px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      color: $brand-gray;
+      font-weight: 300;
+
+      p {
+        margin: 5px 0 0;
+      }
+
+      .comment-reply-title {
+        @include pie-clearfix();
+        margin: 0;
+        font-weight: 300;
+        border-bottom: none;
+
+        small {
+          display: inline-block;
+          float: right;
+
+          a {
+            @include btn-danger();
+            font-size: .9rem;
+
+            &:after {
+              content: "";
+            }
+          }
+        }
+      }
+
+      form {
+        textarea {
+          width: 99%;
+        }
+      }
+
+      input[type="submit"] {
+        @include btn-secondary();
+        font-size: .9rem;
+        border: none;
+        font-family: $base-font;
+      }
+
+      .form-allowed-tags {
+        font-size: .8rem;
+      }
+    }
+
+    &.comment-author-opera-plus {
+      > article {
+        background-image: url('../images/avatar.png');
+        background-repeat: no-repeat;
+        background-position: center left;
+        padding-left: 90px;
+      }
+    }
+  }
+
+  .comment-respond {
+    p {
+      margin: 5px 0 0;
+      font-size: 1rem;
+    }
+
+    .form-submit {
+      text-align: right;
+    }
+
+    form {
+      textarea {
+        width: 100%;
+      }
+    }
+
+    input[type="submit"] {
+      @include btn-secondary();
+      font-size: .9rem;
+      border: none;
+      font-family: $base-font;
+    }
+
+    .form-allowed-tags {
+      font-size: .8rem;
+    }
+  }
+
+  .children {
+    .comment-body {
+      background-color: #fff;
+    }
+  }
+  .comment-author,
+  .comment-metadata {
+    display: inline-block;
+    font-size: 1rem;
+  }
+
+  .edit-link {
+    margin-left: 5px;
+    display: inline-block;
+
+    a {
+      color: $brand-danger;
+    }
+  }
+}
+
+
+
+.comment-list {
+  //@include list-unstyled;
+}
+.comment-list ol {
+  list-style: none;
+}
+.comment-form p {
+  @extend .form-group !optional;
+}
+.comment-form input[type="text"],
+.comment-form input[type="email"],
+.comment-form input[type="url"],
+.comment-form textarea {
+  @extend .form-control !optional;
+}

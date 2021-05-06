@@ -1,0 +1,127 @@
+.header {
+    margin-bottom: 10px;
+
+    @include media-breakpoint-up(md) {
+        margin-bottom: $base-indent;
+    }
+}
+
+.brand {
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    margin-top: 5px;
+
+    &-logo {
+        @include make-col(7);
+
+        // ToDo add mixin
+        padding-left: $grid-gutter-width-base / 2;
+        padding-right: $grid-gutter-width-base / 2;
+
+
+        @include media-breakpoint-up(md) {
+            @include make-col(4.6);
+        }
+
+        @include media-breakpoint-up(lg) {
+            @include make-col(4.2);
+        }
+    }
+
+    &-nav {
+        @include make-col(5);
+
+        // ToDo add mixin
+        padding-left: $grid-gutter-width-base / 2;
+        padding-right: $grid-gutter-width-base / 2;
+
+        @include media-breakpoint-up(md) {
+            @include make-col(7.4);
+        }
+
+        @include media-breakpoint-up(lg) {
+            @include make-col(7.8);
+        }
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    &-promo {
+        margin: 10px 0;
+
+        @include media-breakpoint-up(md) {
+            margin: 0;
+        }
+    }
+
+    &-social {
+        display: none;
+        vertical-align: top;
+
+        @include media-breakpoint-up(md) {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        @include media-breakpoint-up(lg) {
+            display: inline-block;
+            margin: 0;
+            margin-right: 10px;
+        }
+
+        svg {
+            height: 34px;
+            width: 34px;
+            margin: 2px;
+        }
+
+
+        .btn {
+            padding: 0;
+
+            &-rss {
+                path:first-child {
+                    fill: $brand-secondary;
+                }
+            }
+
+            i:before {
+                line-height: inherit;
+            }
+
+            &:hover {
+                circle,
+                path:first-child {
+                    fill: $brand-primary;
+                }
+            }
+
+            i:before {
+                vertical-align: middle;
+            }
+        }
+    }
+
+    &-search {
+        display: inline-block;
+    }
+
+    &-title {
+        display: none;
+        position: relative;
+        border-top: 1px solid $brand-border;
+        text-transform: uppercase;
+        color: $brand-gray;
+        font-size: .9em;
+        padding-top: 8px;
+        margin-top: 8px;
+        text-align: center;
+
+        @include media-breakpoint-up(md) {
+            display: block;
+        }
+    }
+}

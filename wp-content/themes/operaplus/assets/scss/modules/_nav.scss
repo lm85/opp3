@@ -1,0 +1,203 @@
+
+.nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 1rem;
+    margin-top: 10px;
+    text-align: center;
+
+    @include media-breakpoint-up(lg) {
+        text-align: right;
+        margin-top: 17px;
+        font-size: 1.1rem;
+    }
+
+    li {
+        display: block;
+
+        @include media-breakpoint-up(md) {
+            display: inline-block;
+        }
+
+        a {
+            display: block;
+            padding: 0.5rem 0.5rem;
+            text-decoration: none;
+            border: 1px solid $brand-border;
+            color: $brand-gray;
+            font-weight: $font-weight-bold;
+
+            @include media-breakpoint-up(md) {
+                font-weight: $font-weight-normal;
+                display: inline-block;
+                border: none;
+                border-bottom: 1px solid $brand-border;
+            }
+        }
+        
+        & + li {
+            @include media-breakpoint-up(md) {
+                margin-left: 10px;
+            }
+
+            a {
+                margin-top: -1px;
+            }
+        }
+
+        &.current-menu-item {
+            > a {
+              color: $brand-secondary;
+            }
+        }
+        
+        &:hover {
+            @include transition(all .2s ease-in-out);
+            
+            > a {
+                @include media-breakpoint-up(md) {
+                    color: $brand-secondary;
+                    border-color: $brand-secondary;
+                }
+            }
+            
+            .sub-menu {
+                display: block;
+            }
+        }
+    }
+    
+    .sub-menu {
+        padding: 0;
+        
+        @include media-breakpoint-up(md) {
+            display: none;
+            position: absolute;
+            //right: 0;
+            //left: 0;
+            font-size: 1rem;
+            //margin-top: 10px;
+            padding: 0;
+            color: #888888;
+            text-align: left;
+            z-index: 3;
+            padding-top: 20px;
+            text-transform: none;
+            width: 150px;
+            margin-left: -40px;
+        
+            &:before {
+                content: "";
+                width: 0px;
+                height: 0px;
+                border-left: 9px solid transparent;
+                border-right: 9px solid transparent;
+                border-bottom: 9px solid #F3F3F3;
+                position: absolute;
+                left: 50%;
+                margin-left: -10px;
+                top: 11px;
+            }
+        }
+        
+        a {
+            display: block;
+            background-color: #F3F3F3;
+            padding: 8px 14px 7px;
+            color: currentColor;
+            border-bottom: none;
+            margin: 0;
+            font-weight: $font-weight-normal;
+            
+            &:hover {
+                background-color: #ddd;
+                color: $brand-primary;
+            }
+        }
+        
+        li {
+            display: block;
+            
+            &:first-child {
+                a {
+                    border-radius: $base-border-radius $base-border-radius 0 0;
+                }
+            }
+            
+            &:last-child {
+                a {
+                    border-radius: 0 0 $base-border-radius $base-border-radius;
+                }
+            }
+            
+            & + li {
+                margin: 0;
+            }
+        }
+    }
+}
+
+.navbar {
+    padding-left: 0;
+    padding-right: 0;
+    padding: 0;
+}
+
+.navbar-toggler {
+    display: inline-block;
+    float: right;
+    background-color: $brand-secondary;
+    border: none;
+    height: auto;
+    width: 45px;
+    padding: .5rem .5rem;
+    border-bottom: 2px solid rgba(#000, .15);
+    text-align: center;
+
+    & + .navbar-toggler {
+        margin-right: 6px;
+    }
+
+    &-item {
+        display: inline-block;
+        float: left;
+        width: 100%;
+        margin: auto;
+        margin-top: 4px;
+        background-color: #fff;
+        height: 3px;
+    }
+
+    &--menu {
+        padding: .5rem .75rem;
+    }
+
+    &--search {
+        min-height: 39px;
+    }
+}
+
+/* Posts navigation */
+.posts-navigation {
+    text-align: right;
+
+    .screen-reader-text {
+      display: none;
+    }
+
+    .nav-links {
+        a {
+            @include btn-secondary;
+        }
+
+        div {
+            display: inline-block;
+
+            & + div {
+                margin-left: 10px;
+            }
+        }
+    }
+}

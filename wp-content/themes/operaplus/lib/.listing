@@ -1,0 +1,12 @@
+drwxr-xr-x    2 1043       client27         4096 Jan 17 13:04 .
+drwxr-xr-x    8 1043       client27         4096 Mar  2 09:05 ..
+-rwxr-xr-x    1 1043       client27         2411 Mar 17 09:09 assets.php
+-rwxr-xr-x    1 1043       client27         1035 Jan 17 12:32 conditional-tag-check.php
+-rwxr-xr-x    1 1043       client27         1833 Jan 17 13:24 config.php
+-rwxr-xr-x    1 1043       client27          731 Jan 17 12:32 extras.php
+-rwxr-xr-x    1 1043       client27         8735 Jan 17 12:32 init.php
+-rwxr-xr-x    1 1043       client27          555 Jan 17 12:32 titles.php
+-rw-r--r--    1 1043       client27          626 Jan 17 13:24 url-rewrite.php
+-rwxr-xr-x    1 1043       client27          304 Jan 17 12:32 utils.php
+-rw-r--r--    1 1043       client27         3594 Jan 17 13:24 wp-admin-extension.php
+-rwxr-xr-x    1 1043       client27         1509 Jan 17 12:32 wrapper.php

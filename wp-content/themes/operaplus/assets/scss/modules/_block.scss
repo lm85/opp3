@@ -1,0 +1,59 @@
+// Formats styles
+.block {
+    font-family: $system-font;
+    font-size: 1rem;
+    margin: 15px 0;
+
+    &-default {
+        border: 1px solid $brand-border;
+        border-left: 3px solid $brand-primary;
+        padding: 12px 20px;
+        border-radius: $base-border-radius;
+
+        b, strong {
+            display: block;
+            text-transform: uppercase;
+            color: $brand-primary;
+        }
+    }
+
+    &-warning {
+        border: 1px solid $brand-border;
+        border-left: 3px solid $brand-secondary;
+        padding: 12px 20px;
+        border-radius: $base-border-radius;
+        color: $brand-secondary;
+
+        b, strong {
+            display: block;
+            text-transform: uppercase;
+            color: $brand-secondary;
+        }
+    }
+
+    p {
+        margin: 0;
+        color: $brand-primary;
+    }
+}
+
+// Reset default styles
+.content-post {
+    .block {
+        &-default {
+            strong {
+                color: $brand-primary;
+            }
+        }
+
+        &-warning {
+            strong {
+                color: $brand-warning;
+            }
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+}

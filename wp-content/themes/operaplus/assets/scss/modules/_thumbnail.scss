@@ -1,0 +1,41 @@
+.gallery {
+  margin: $base-indent-top 0 !important;
+
+    .gallery-item {
+      margin: 0;
+
+      a {
+        display: block;
+        border: 1px solid $brand-border !important;
+        padding: 3px;
+        border-radius: 2px;
+        opacity: 0.9;
+        margin-left: 5px;
+
+        &:hover {
+          opacity: 1;
+          border: 1px solid darken($brand-border, 10%) !important;
+        }
+
+        img {
+          display: block;
+          border: none !important;
+          max-width: 100%;
+          height: auto;
+          margin: auto;
+        }
+      }
+
+      .wp-caption-text {
+        display: none;
+      }
+    }
+
+
+  &:before {
+    content: "Fotogalerie";
+    @include title();
+    display: block;
+    font-weight: 300;
+  }
+}

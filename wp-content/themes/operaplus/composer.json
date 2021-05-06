@@ -1,0 +1,13 @@
+{
+  "require": {
+    "webdevstudios/cmb2": "dev-master",
+    "mpdf/mpdf": "dev-master"
+
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "autoload": {
+    "files": ["vendor/webdevstudios/cmb2/init.php"]
+  }
+}

@@ -1,0 +1,6 @@
+assets/scss/.sass-cache
+#http://blog.bitfluent.com/post/173740409/ignoring-icon-in-gitignore
+Icon^M^M
+Icon?
+settings.json
+.vscode/settings.json

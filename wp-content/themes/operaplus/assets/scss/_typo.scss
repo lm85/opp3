@@ -1,0 +1,71 @@
+html {
+    font-size: $base-font-size;
+}
+
+body {
+    font-family: 'Alegreya Sans', serif;
+    color: $brand-primary;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+  color: $brand-primary;
+}
+
+h1 {
+  font-size: $h1-size;
+  margin: ($base-indent-bottom / 2) 0;
+  line-height: $h1-size * 1.1;
+}
+
+h2 {
+  font-size: $h2-size;
+  line-height: $h2-size * 1.1;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h3 {
+
+}
+
+h4 {
+  font-weight: 300;
+  margin: 0;
+}
+
+.box-title {
+  @include title();
+}
+
+.widget-title {
+    @include title();
+
+    font-weight: 300;
+}
+
+.page-header {
+  margin-bottom: $base-indent-bottom;
+
+  h1 {
+    @include title();
+  }
+}
+
+a {
+  &:hover {
+    text-decoration: none;
+    color: lighten($brand-primary, 25%);
+  }
+}
+
+.entry-meta {
+  text-transform: uppercase;
+  font-size: .9rem;
+  color: #888;
+
+  a {
+    color: currentColor;
+  }
+}

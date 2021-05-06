@@ -1,0 +1,86 @@
+// Columns
+$columns:   17;
+
+// Base colors
+$brand-primary:     #3F3D38;
+$brand-secondary:   #FFB04F;
+$brand-gray:        #544F4A;
+$brand-gray-light:  #666666;
+$brand-border:      #dddddd;
+$brand-components:  #4A90CB;
+$brand-success:     #3c763d;
+$brand-danger:      #d43f3a;
+$brand-info:        #3B94D9;
+$brand-warning:     $brand-secondary;
+$brand-dark:        #19171B;
+
+$gray-dark:         $brand-gray;
+
+$social-twitter:    $brand-info;
+$social-facebook:   #3B5998;
+$social-youtube:    #e62117;
+
+// Base font
+$base-font:           'Alegreya Sans', Arial, serif;
+$system-font:         Tahoma, sans-serif;
+$base-font-size:      16px;
+$h1-size:             2.45rem;
+$h2-size:             2.2rem;
+$h3-size:             1.2rem;
+
+// Font weight
+$font-weight-normal:        400;
+$font-weight-bold:          700;
+$text-muted:                $brand-gray;
+
+// Base indent
+$base-indent:         40px;
+$base-indent-left:    20px;
+$base-indent-right:   20px;
+$base-indent-bottom:  20px;
+$base-indent-top:     20px;
+
+// Boxs
+$small-box:           30px;
+
+// Border radius
+$base-border-radius:  2px;
+
+// Base layout
+$container:           1100px;
+$container--wide:     $container;
+//$container--narow:
+$container--medium:   1024px;
+$container--tablet:   960px;
+$container--small:    720px;
+$container--mobil:    540px;
+
+// Bootstrap gird
+$grid-breakpoints: (
+  // Extra small screen / phone
+  xs: 0,
+  // Small screen / phone
+  sm: $container--mobil,
+  // Medium screen / tablet
+  md: $container--tablet,
+  // Large screen / desktop
+  lg: $container--medium,
+  // Extra large screen / wide desktop
+  xl: $container--wide
+) !default;
+
+$container-max-widths: (
+  sm: $container--mobil,
+  md: $container--tablet,
+  lg: $container--medium,
+  xl: $container--wide
+) !default;
+
+$grid-gutter-width-base:          0.875rem !default; // 15px
+
+/* Navbar */
+$navbar-dark-toggler-bg:    none;
+$navbar-light-toggler-bg:   none;
+
+/* Bootstrap settings */
+$enable-hover-media-query:  false !default;

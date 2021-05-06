@@ -1,0 +1,95 @@
+<?php global $hash; ?>
+
+<header class="banner" role="banner">
+	<div class="container">
+		<div class="header-bg"></div>
+
+
+		<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+			<div class="row">
+				<div class="brand-logo">
+					<a class="brand" href="<?= esc_url(home_url('/')); ?>">
+						<img src="<?php echo get_template_directory_uri(); ?>/build/img/logo.png?<?php echo $hash; ?>">
+						<span class="brand-title"><?php bloginfo('description'); ?></span>
+					</a>
+				</div><!-- /.brand-logo -->
+				<div class="brand-nav">
+					<div class="row">
+<!--
+						<div class="col-sm-4 col-md-6 col-lg-4 hidden-sm-down">
+							<div class="brand-promo hidden-sm-down">
+								<?php //dynamic_sidebar('widget-promo'); ?>
+							</div>
+						</div>
+//-->
+						
+					</div>
+
+				</div>
+<div class="brand-social hidden-sm-down">
+								<a href="https://www.facebook.com/operapluscz/" title="OperaPlus Facebook" target="_blank" class="btn btn-facebook"><?php get_template_part('build/img/icon', 'facebook.svg'); ?></a>
+								<a href="https://twitter.com/OperaPlus" title="OperaPlus Twitter" target="_blank" class="btn btn-twitter"><?php get_template_part('build/img/icon', 'twitter.svg'); ?></a>
+								<a href="https://www.youtube.com/channel/UCZt56dNHLFAceCsDDcnlQdQ"  target="_blank" title="OperaPlus Youtube" class="btn btn-youtube-play"><?php get_template_part('build/img/icon', 'youtube.svg'); ?></a>
+								<a href="http://operaplus.cz/feed/" title="OperaPlus RSS"  target="_blank" class="btn btn-rss"><?php get_template_part('build/img/icon', 'rss.svg'); ?></a>
+							</div><!-- /.brand-social -->
+
+							<div class="brand-search">
+								<div class="input-group hidden-md-down">
+									<?php get_search_form(); ?>
+								</div><!-- /.input-group -->
+							</div>
+			</div><!--/.row-->
+<div class="col-12 col-md-12 col-lg-12 text-center center " id="myHeader">
+							
+<div class="brand-logo">
+<a class="brand" href="https://operaplus.cz/">
+<img class="lazy loaded" src="https://operaplus.cz/wp-content/themes/operaplus/build/img/logo.png?20202020-0707-1313h#v35" data-src="https://operaplus.cz/wp-content/themes/operaplus/build/img/logo.png?20202020-0707-1313h#v35" data-was-processed="true">
+<span class="brand-title">Váš průvodce světem hudby, opery a tance</span>
+</a>
+</div>
+							<button class="navbar-toggler navbar-toggler--menu hidden-lg-up pull-right" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-item"></span>
+								<span class="navbar-toggler-item"></span>
+								<span class="navbar-toggler-item"></span>
+							</button>
+							<button class="navbar-toggler navbar-toggler--search hidden-lg-up pull-right" type="button" data-toggle="collapse" data-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
+								<i class="icon-search"></i>
+							</button>
+
+							<nav class="hidden-md-down" role="navigation">
+<a class="brand stickyimg" href="https://operaplus.cz/">
+<img class="lazy loaded" src="https://operaplus.cz/wp-content/themes/operaplus/build/img/logo.png?20202020-0606-2929h#v35" data-src="https://operaplus.buzz/wp-content/themes/operaplus/build/img/logo.png?20202020-0606-2929h#v35" data-was-processed="true">
+
+</a>
+
+								<?php
+								if (has_nav_menu('primary_navigation')) :
+									wp_nav_menu(['theme_location' => 'primary_navigation', 'menu_class' => 'nav']);
+								endif;
+								?>
+							</nav>
+					
+			<div class="collapse navbar-collapse" id="navbarMenu">
+				<nav role="navigation">
+					<?php
+					if (has_nav_menu('primary_navigation')) :
+						wp_nav_menu(['theme_location' => 'primary_navigation', 'menu_class' => 'nav']);
+					endif;
+					?>
+				</nav>
+			</div><!--/.collapse-->
+</div><!--idheader//-->
+
+			<div class="collapse navbar-collapse" id="navbarSearch">
+				<div class="input-group">
+					<?php get_search_form(); ?>
+				</div><!-- /.input-group -->
+			</div><!--/.collapse-->
+
+			<div class="brand-promo hidden-md-up">
+				<?php dynamic_sidebar('widget-promo'); ?>
+			</div><!-- /.brand-promo -->
+		</nav>
+	</div>
+<?php// wp_nav_menu(['theme_location' => 'primary_navigation', 'menu_class' => 'nav']);?>
+</header>

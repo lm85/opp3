@@ -1,0 +1,167 @@
+// Ads
+[class*="opera-"],
+[class*="local-"],
+[class*="advads-"] {
+  padding: 1px;
+
+  p {
+      margin: 0;
+  }
+
+  .attachment {
+    display: none;
+  }
+}
+
+// Ads label
+.opera-adlabel,
+.local-adlabel,
+.advads-adlabel {
+  display: block;
+  color: #aaa;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.ad {
+    position: relative;
+
+    &:before {
+        position: absolute;
+        top: -15px;
+        left: 0;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #aaa;
+        content: "Reklama";
+    }
+
+    .adsbygoogle {
+        margin-bottom: 20px;
+    }
+
+    &--list {
+        padding-top: 15px; // because of ad label height
+
+        .box {
+            border: 1px solid $brand-border;
+            padding: 5px;
+        }
+
+        &:before {
+            content: "Komerční sdělení";
+            top: 0;
+        }
+    }
+
+    .box-content-title {
+        font-size: 1.5em;
+    }
+
+    &--pr {
+        &:before {
+            content: "Reklama a PR zprávy";
+        }
+    }
+}
+
+.ad-skyscraper {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 600px;
+    
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    &:empty {
+        display: none;
+    }
+
+    @media (min-width: 1300px) {
+        display: block;
+    }
+}
+
+.ad-skyscraper-backup {
+    display: block;
+
+    @media (min-width: 1300px) {
+        display: none;
+    }
+}
+
+.ad-skyscraper-left {
+    left: -107px;
+    display: none;
+}
+
+.ad-skyscraper-right {
+    right: -107px;
+}
+
+
+// Full banner & Leaderboard
+.ad-full-banner,
+.ad-leaderboard {
+    margin-bottom: 10px;
+    
+    @include media-breakpoint-up(md) {
+        min-height: 140px; // 100px banner + label Reklama + bottom margin
+    }
+    
+    &:empty {
+        display: none;
+    }
+}
+
+// Fixed height for mobile version of full banner & leaderboard
+.ad-leaderboard-mobile {
+    min-height: 60px;
+    margin-bottom: 20px;
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    &:empty {
+        display: none;
+    }
+}
+
+.ad-full-banner-mobile {
+    min-height: 80px;
+    margin-bottom: 20px;
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    &:empty {
+        display: none;
+    }
+}
+
+.ad-square {
+    min-height: 280px;
+
+    &:empty {
+        display: none;
+    }
+}
+
+// Responsive ads
+.ad-leaderboard,
+.ad-full-banner,
+.ad-full-banner-2 {
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}

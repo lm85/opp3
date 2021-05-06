@@ -1,0 +1,28 @@
+.login #login {
+  width: 375px;
+}
+
+.login h1 a {
+  background-image: url('../../assets/images/logo.png');
+  height: 50px;
+  width: 375px;
+  background-size: contain;
+}
+
+input#wp-submit {
+  background-color: #FFB04F;
+  border-color: #FFB04F;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  text-transform: uppercase;
+  text-shadow: none;
+}
+
+input#wp-submit:hover {
+  background-color: #1A171B;
+  border-color: #1A171B;
+}
+
+.login .message {
+  border-left: 4px solid #FFB04F;
+}

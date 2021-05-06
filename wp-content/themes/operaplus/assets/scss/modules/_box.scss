@@ -1,0 +1,581 @@
+.box {
+    @include pie-clearfix;
+
+    &--small {
+        margin-bottom: 10px;
+    }
+
+    &--medium {
+        margin-bottom: 30px;
+    }
+
+    &--big {
+        margin-bottom: 40px;
+    }
+
+    &.ad,
+    &.category-zpravy-ruzne,
+    &.category-zpravy-opera,
+    &.category-zpravy-hudba,
+    &.category-zpravy-balet,
+    &.category-pr-zpravy {
+    .box-content-title {
+      font-size: 1.8rem;
+      font-weight: 400;
+      line-height: 1.2em;
+      margin: 0;
+
+      a {
+        color: $brand-gray;
+
+        &:hover {
+            color: lighten($brand-gray, 20%);
+        }
+      }
+    }
+    }
+    
+    &-special {
+        position: relative;
+        margin-bottom: 30px;
+        
+        .box-image {
+            position: relative;
+            
+            img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+                border-radius: $base-border-radius;
+            }
+        }
+        
+        .box-content {
+            @include gradient-y(rgba(#000, .0), #000, 0%, 100%);
+            
+            position: absolute;
+            bottom: 0;
+            padding: 20px;
+            
+            a {
+                color: #fff;
+            }
+        }
+    }
+    
+    &.search-result {
+        .box-content-title {
+            font-size: 1.4em;
+            font-weight: 400;
+
+            a {
+                text-decoration: underline;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    .box-image {
+        position: relative;
+        overflow: hidden;
+
+        @include breakpoint(medium) {
+          //@include span(4 of 12);
+          //height: 160px;
+        }
+
+        a {
+            display: block;
+        }
+
+        img {
+            width: 100%;
+            display: block;
+            height: auto;
+
+            @include media-breakpoint-up(md) {
+                max-width: 100%;
+            }
+        }
+
+        .label {
+          position: absolute;
+          bottom: 15px;
+          left: 10px;
+
+          @include breakpoint(medium) {
+            right: 10px;
+            left: auto;
+          }
+        }
+    }
+
+    .box-link {
+        height: inherit;
+    }
+
+    .box-content {
+        @include breakpoint(medium) {
+          //@include span(8 of 12);
+          //@include omega;
+        }
+
+        a {
+          text-decoration: none;
+        }
+
+        p {
+          color: $brand-gray;
+          font-size: 1.1rem;
+          margin: 5px 0 0;
+        }
+    }
+
+    .box-content-title {
+        margin-top: -5px;
+
+        &--sticky {
+            font-size: 2.4rem;
+        }
+    }
+    
+    .box-content-title.bold {
+        margin: 0;
+        padding: 0;
+        font-size: 1.2rem;;
+        font-weight: $font-weight-bold;
+    }
+    
+    .box-content-title.interview {
+        padding: 0 10px; 
+    }
+
+    .thumb {
+        min-height: 160px;
+        background-color: $brand-border;
+        background-image: url('../img/default.jpg');
+        background-repeat: no-repeat;
+    }
+}
+
+.box--recommended {
+    .box-content-link {
+        display: block;
+        height: 70px;
+        overflow: hidden;
+        margin-top: 5px;
+    }
+}
+
+.box-group {
+    margin-bottom: $base-indent;
+
+    &--small {
+        margin-bottom: 30px;
+    }
+
+    &--actual {
+        padding: 10px;
+        border: 1px solid $brand-border;
+    }
+    
+    &--interview {
+        .box {
+            margin-bottom: 15px;
+            
+            @include media-breakpoint-up(sm) {
+                margin-bottom: 0;
+            }
+        }
+        .box-image {
+            &:after {
+                @include gradient-y(rgba(#fff, .0), #fff, 0%, 100%);
+                
+                content: "";
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 50px;
+            }
+            
+            .label {
+                bottom: 30px;
+                z-index: 2;
+            }
+        }
+        
+        .box-content {
+            margin-top: -20px;
+            position: relative;
+            
+            h3 {
+                margin: 0;
+            }
+        }
+    }
+}
+
+.box-group-title {
+    &--actual {
+        color: $brand-danger;
+        margin-bottom: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 1.1rem;
+    }
+    
+    &--interview {
+        color: $brand-info;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        position: relative;
+        background-color: #fff;
+        text-align: center;
+        margin: 20px 0 10px;
+        
+        span {
+            background-color: #fff;
+            display: inline-block;
+            position: relative;
+            z-index: 2;
+            padding: 0 10px;
+        }
+        
+        &:before {
+            position: absolute;
+            content: "";
+            border-bottom: 1px solid $brand-border;
+            height: 1px;
+            display: block;
+            width: 100%;
+            top: 50%;
+            z-index: 1;
+        }
+    }
+}
+
+.box-category {
+  margin-bottom: 0;
+  font-size: 1.1rem;
+
+  @include breakpoint(medium) {
+    @include span(6 of 12);
+
+    &:nth-child(2n) {
+      @include last;
+    }
+  }
+
+  &.box--small {
+    height: auto;
+  }
+
+    &.box-extend {
+        width: 100%;
+        height: auto;
+
+  
+          h4 {
+              font-weight: $font-weight-bold;
+              font-size: 1.2rem;
+              
+              a {
+                  text-decoration: none;
+              }
+          }
+
+        .row {
+            margin-bottom: 10px;
+
+            p {
+                margin: 0  0 15px;
+            }
+        }
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+  .box-category--media {
+    @include span(3 of 6);
+    
+    position: relative;
+  }
+
+  .box-category--title {
+    @include span(3 last of 6);
+
+    font-size: 1.2rem;;
+    font-weight: $font-weight-bold;
+    
+    a {
+        text-decoration: none;
+    }
+  }
+
+  .box-category--inner {
+    div {
+      &:first-child {
+         @include breakpoint(medium) {
+          @include span(3 of 6);
+        }
+      }
+    }
+  }
+}
+
+.box-category--extend {
+  > div {
+    @include span(1 of 6);
+  }
+}
+
+.box-pr {
+  margin-top: $base-indent;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    border: 1px solid $brand-border;
+    list-style: none;
+    padding: 10px;
+    font-size: .9rem;
+
+    li {
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      a {
+        color: $brand-gray-light;
+      }
+    }
+  }
+}
+
+// ---
+// Box related
+.box-related {
+    width: 265px;
+    float: left;
+    clear: left;
+    margin: 10px 15px 10px -20px;
+    color: $brand-dark;
+    padding: 10px;
+    border: 1px solid $brand-border;
+    border-radius: $base-border-radius;
+    
+    b {
+        display: block;
+        text-transform: uppercase;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    
+    .box-related-link {
+        color: currentColor;
+    }
+    
+    &:after {
+        clear: both;
+        content: "";
+    }
+}
+// /Box related
+// ---
+
+.related {
+  @include clearfix;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+    .title {
+        padding-right: 10px;
+        display: inline-block;
+    }
+
+  li {
+    @extend .row;
+
+    height: 120px;
+    overflow: hidden;
+    margin-bottom: $base-indent-bottom;
+
+    a {
+      color: $brand-gray;
+    }
+  }
+}
+
+// Box "Týden s hudbou"
+.box-week {
+    border: 1px solid #ddd;
+    padding: 5px 10px 10px 70px;
+    border-radius: $base-border-radius;
+    font-size: 18px;
+    position: relative;
+    overflow: hidden;
+    background-image: url('../img/icon--week.png');
+    background-repeat: no-repeat;
+    background-position: 20px center;
+    background-size: 30px;
+    margin: 30px 0;
+}
+
+.box-week p {
+    margin: 0;
+}
+
+.box-week p strong:first-child {
+    display: block;
+    font-size: 22px;
+}
+
+.box-week em {
+    position: absolute;
+    right: -40px;
+    top: -10px;
+    color: #fff;
+    font-size: 22px;
+    text-align: center;
+    line-height: 20px;
+    transform: rotate(45deg);
+    display: block;
+    width: 100px;
+    background-color: $brand-secondary;
+    font-weight: $font-weight-bold;
+    padding: 20px 0 3px;
+    
+    
+    &:after {
+        content: "";
+        width: 60px;
+        height: 60px;
+    }
+}
+
+
+// Box video, gallery and aside
+.format-video:not(.list):not(.box-group--recommended),
+.format-gallery:not(.list):not(.box-group-recommended),
+.format-aside:not(.list):not(.box-group-recommended) {
+    .box-image {
+        a {
+            &:hover {
+                .box-format-icon {
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}
+
+.box-category,
+.box--recommended,
+.format-video.list,
+.format-video.box-group--recommended
+.format-aside.list,
+.format-aside.box-group--recommended  {
+    .box-format-icon {
+        background-size: 65px;
+    }
+}
+
+.box-icon_small .box-image a {
+    &:before {
+        background-size: 65px;
+    }
+}
+
+.box-icon:not(.format-standard) .box-image a:first-child {
+    position: relative;
+
+    &:before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(255, 255, 225, .15);
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    &:hover {
+        &:before {
+            background-color: transparent;
+        }
+    }
+}
+
+.box.format-aside .box-image a {
+    &:before {
+        background-image: url('../img/box-format-icon--special.png');
+    }
+}
+
+.box.format-video .box-image > a {
+    &:before {
+        background-image: url('../img/box-format-icon--video.png');
+    }
+}
+
+.box.format-gallery .box-image > a {
+    &:before {
+        background-image: url('../img/box-format-icon--gallery.png');
+    }
+}
+
+// clear elements
+.clearfix,
+.box-group {
+  @include pie-clearfix;
+
+  &:before {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// Box wrapper
+.box-wrapper {
+    .box-wrapper--btn {
+        text-align: right;
+        margin: 10px 0 40px 0;
+
+        @include breakpoint(medium) {
+            margin: -20px 0 0;
+        }
+    }
+}
+
+// Gallery
+.box--gallery {
+    padding: 20px;
+    background-color: $brand-dark;
+    color: #fff;
+    
+    .gallery {
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+    }
+}

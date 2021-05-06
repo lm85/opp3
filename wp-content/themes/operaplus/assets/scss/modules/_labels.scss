@@ -1,0 +1,48 @@
+.label {
+    border-radius: 2px;
+    text-align: center;
+    padding: 3px 6px;
+    font-size: 1rem;
+    text-decoration: none;
+
+    &.label--category {
+        background-color: $brand-secondary;
+        color: #fff;
+        text-transform: uppercase;
+    }
+
+    &.label--recomend {
+        color: $brand-secondary;
+        text-transform: uppercase;
+        padding: 0 0 10px;
+        display: inline-block;
+        font-weight: $font-weight-bold;
+        font-size: 1.1rem;
+    }
+    
+    &.label--news {
+        color: $brand-gray;
+        text-transform: uppercase;
+        padding: 0 0 10px;
+        display: inline-block;
+    }
+
+    &.label--outdated {
+        color: $brand-danger;
+        text-transform: uppercase;
+        padding: 0 0 10px;
+        display: inline-block;
+    }
+
+    &.label--updated {
+        background-color: $brand-danger;
+        color: #fff;
+        margin-left: 5px;
+    }
+
+    &.label--info {
+        background-color: $brand-gray;
+        color: #fff;
+        margin-left: 5px;
+    }
+}

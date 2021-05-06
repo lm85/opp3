@@ -1,0 +1,10 @@
+@import "../variables";
+
+@import "../modules/alert";
+@import "../modules/block";
+
+.alert {
+    p {
+        margin: 0;
+    }
+}

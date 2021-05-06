@@ -1,0 +1,74 @@
+/* Navbar */
+/* Bootstrap settings */
+/*
+ * Stlyes for alerts
+ */
+.alert {
+  padding: 8px 10px;
+  margin: 15px 0;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  font-family: Tahoma, sans-serif;
+  font-size: 1rem; }
+  .alert-danger {
+    border-color: #efb9b8;
+    background-color: #fdf7f6;
+    color: #d43f3a; }
+  .alert-info {
+    border-color: #bbdaf2;
+    background-color: #f3f8fd;
+    color: #3B94D9; }
+  .alert-success {
+    border-color: #aad4ab;
+    background-color: #eef6ee;
+    color: #3c763d; }
+  .alert-warning {
+    border-color: #ffd5a1;
+    background-color: #fffcf7;
+    color: #FFB04F; }
+  .alert p {
+    margin: 0; }
+
+.content-post .alert p {
+  margin: 0;
+  color: inherit; }
+
+.block {
+  font-family: Tahoma, sans-serif;
+  font-size: 1rem;
+  margin: 15px 0; }
+  .block-default {
+    border: 1px solid #dddddd;
+    border-left: 3px solid #3F3D38;
+    padding: 12px 20px;
+    border-radius: 2px; }
+    .block-default b, .block-default strong {
+      display: block;
+      text-transform: uppercase;
+      color: #3F3D38; }
+  .block-warning {
+    border: 1px solid #dddddd;
+    border-left: 3px solid #FFB04F;
+    padding: 12px 20px;
+    border-radius: 2px;
+    color: #FFB04F; }
+    .block-warning b, .block-warning strong {
+      display: block;
+      text-transform: uppercase;
+      color: #FFB04F; }
+  .block p {
+    margin: 0;
+    color: #3F3D38; }
+
+.content-post .block-default strong {
+  color: #3F3D38; }
+
+.content-post .block-warning strong {
+  color: #FFB04F; }
+
+.content-post .block p {
+  margin: 0; }
+
+.alert p {
+  margin: 0; }

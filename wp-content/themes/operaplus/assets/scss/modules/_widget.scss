@@ -1,0 +1,264 @@
+/*
+ * Styles for widget and ADs in sidebar
+ */
+
+.widget {
+    overflow: hidden;
+    margin-bottom: $base-indent-bottom;
+
+    h3 {
+        margin-bottom: 10px;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            font-size: 1rem;
+            margin-bottom: 15px;
+
+            span {
+                color: $brand-gray;
+            }
+        }
+    }
+
+  // ToDo change it to the bootstrap variable
+  .nav-tabs {
+      border-bottom: none;
+
+      .nav-item {
+          text-transform: uppercase;
+          margin-bottom: 0;
+
+          .nav-link {
+              border: none;
+              border-bottom: 1px solid #ddd;
+              text-decoration: none;
+              padding: .5rem;
+
+              &.active {
+                  border-bottom: 1px solid $brand-secondary;
+                  color: $brand-secondary;
+              }
+          }
+      }
+  }
+
+  &.popular {
+    h3 {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    .tab-content {
+        .tab-pane {
+            margin-top: -1px;
+            border-top: 1px solid #ddd;
+        }
+    }
+
+    .wpp-list {
+        margin-top: 15px;
+      counter-reset: section;
+
+      li {
+          padding-left: 20px;
+          position: relative;
+
+        &:before {
+          counter-increment: section;
+          content: counter(section) '.';
+          position: absolute;
+          left: 0;
+        }
+
+        .wpp-views {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &.widget_recent_comments {
+    ul {
+      padding-left: 15px;
+
+      li {
+        @include list;
+      }
+    }
+  }
+
+
+  &.anniversary {
+    line-height: 1rem;
+
+    div {
+      > a, img {
+        float: left;
+        display: block;
+        margin-right: 10px;
+      }
+
+      strong {
+        font-size: 1rem;
+        margin-bottom: 5px;
+        display: block;
+      }
+    }
+
+    strong, p {
+      color: $brand-gray-light;
+    }
+  }
+
+  &.promo {
+    text-align: right;
+    margin-bottom: 0;
+
+    a {
+      display: block;
+      width: 100%;
+      height: 90px;
+      text-align: right;
+      text-decoration: none;
+      position: relative;
+      border-radius: 3px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      @include media-breakpoint-up(md) {
+          display: inline-block;
+          max-width: 195px;
+          float: right;
+      }
+
+      &:hover {
+        .gradient {
+          background: linear-gradient(to bottom, #333 0%, transparent 100%);
+        }
+      }
+
+      .title {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        font-size: 22px;
+        line-height: 22px;
+        color: #fff;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 10px;
+        z-index: 1;
+        
+
+        @include breakpoint(wide) {
+          height: 50px;
+        }
+      }
+
+      .label {
+        display: none;
+        /*@include breakpoint(wide) {*/
+          display: inline-block;
+          position: absolute;
+          right: 10px;
+          bottom: 10px;
+          text-transform: uppercase;
+          font-size: 14px;
+        /*}*/
+      }
+
+      &:after {
+          content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        border-radius: 3px;
+        // ToDo add gradient mixin
+        background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+        background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%);
+        background: linear-gradient(to bottom, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#00000000',GradientType=0 );
+      }
+    }
+  }
+
+    &_wysija {
+        form {
+            font-size: 16px;
+
+            p {
+                margin-bottom: 10px;
+                position: relative;
+            }
+            
+            input[type="text"] {
+                width: 100%;
+                display: block;
+                border: 1px solid $brand-border;
+                padding: 8px 12px;
+                border-radius: $base-border-radius;
+                font-size: 14px;
+            }
+            
+            input[type="submit"] {
+                @extend .btn;
+                @extend .btn-secondary;
+                
+                font-size: 14px;
+                margin: 0;
+            }
+            
+            .formError {
+                width: 100%;
+                left: 0 !important;
+                top: 100% !important;
+                
+                .formErrorContent {
+                    width: 100%;
+                }
+            }
+        }
+
+        .updated {
+            border-color: $brand-secondary;
+            background-color: #fff;
+            text-align: center;
+            padding: 10px;
+            color: $brand-secondary;
+            
+            li {
+                margin: 0;
+            }
+        }
+    }
+}
+
+.widget.promo-2 {
+    margin-bottom: 20px;
+    
+    a {
+        max-width: 100%;
+        height: 150px;
+    }
+    
+    a .title {
+        padding: 15px;
+        height: auto;
+    }
+    
+    figure {
+        margin: 0;
+    }
+}
+
+.ad + .widget {
+  margin-top: $base-indent-top;
+}

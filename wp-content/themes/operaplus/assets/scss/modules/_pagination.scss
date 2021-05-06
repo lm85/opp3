@@ -1,0 +1,24 @@
+.wp-paginate {
+  padding: 0;
+  text-align: right;
+
+  li {
+    display: inline-block;
+
+    &+ li {
+      margin-left: 5px;
+    }
+
+    .prev,
+    .next,
+    .page {
+      @include btn-secondary();
+
+      &.current {
+        background-color: $brand-primary;
+        cursor: default;
+      }
+    }
+
+  }
+}

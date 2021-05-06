@@ -1,0 +1,82 @@
+@mixin btn() {
+    display: inline-block;
+    padding: 0.5rem 0.5rem;
+    border-radius: $base-border-radius;
+    cursor: pointer;
+}
+
+@mixin btn-secondary() {
+  display: inline-block;
+  border-radius: $base-border-radius;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: $brand-secondary;
+  color: #fff;
+
+  &:hover {
+    background-color: $brand-primary;
+    color: #fff;
+  }
+}
+
+@mixin btn-danger() {
+  display: inline-block;
+  border-radius: $base-border-radius;
+  cursor: pointer;
+  padding: 4px 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: $brand-danger;
+  color: #fff;
+
+  &:hover {
+    background-color: $brand-primary;
+  }
+}
+
+@mixin validation() {
+  text-transform: none;
+  font-size: 1em;
+}
+
+@mixin list() {
+  position: relative;
+
+  .comment-author-link {
+    font-weight: 700;
+  }
+
+  a {
+    margin-left: 2px;
+  }
+
+  &:before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background-color: $brand-components;
+    position: absolute;
+    top: 8px;
+    left: -10px;
+  }
+}
+
+@mixin pie-clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin clearfix {
+  overflow: hidden;
+}
+
+@mixin box-shadow($shadow...) {
+  $shadow: set-arglist-default($shadow, default-box-shadow());
+  @include prefixed-properties(css-boxshadow, $box-shadow-support-threshold, (box-shadow: $shadow));
+}

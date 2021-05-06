@@ -1,0 +1,36 @@
+.group {
+  &.group-inline {
+        margin-top: 20px;
+
+        > div {
+          display: inline-block;
+          margin-right: 20px;
+
+          @include breakpoint(medium) {
+            margin-right: 10px;
+          }
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+
+        @include breakpoint(medium) {
+            margin-top: 0;
+        }
+      }
+
+  .social-group {
+    a {
+      margin-right: 20px;
+
+      @include breakpoint(medium) {
+        margin-right: 10px;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

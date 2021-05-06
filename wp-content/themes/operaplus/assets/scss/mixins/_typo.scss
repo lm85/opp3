@@ -1,0 +1,26 @@
+$size: 1.25rem;
+
+@mixin title() {
+  font-weight: 700;
+  font-size: $size;
+  line-height: $size * 1.1;
+  text-transform: uppercase;
+  color: $brand-gray;
+  border-bottom: 1px solid $brand-border;
+  padding-bottom: 3px;
+
+  a {
+    color: $brand-secondary;
+    text-decoration: none;
+
+    &:after {
+      content: " »";
+      color: #aaa;
+      font-weight: 300;
+    }
+
+    &:hover {
+      color: $brand-primary;
+    }
+  }
+}

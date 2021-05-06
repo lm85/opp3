@@ -1,0 +1,57 @@
+.taxonomy-register-listing {
+  @include pie-clearfix;
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  .taxonomy-register-group {
+    margin-bottom: $base-indent-bottom;
+    position: relative;
+
+    > span {
+      font-weight: 700;
+      border-bottom: 1px solid $brand-border;
+      display: block;
+    }
+  }
+
+  ul {
+    @include pie-clearfix;
+
+    list-style: none;
+    padding: 10px 0 0 10px;
+  }
+
+  .taxonomy-register-item {
+    @include list;
+
+    margin-bottom: 5px;
+
+    @include breakpoint(medium) {
+      @include span(6 of 12);
+
+      &:nth-of-type(2n) {
+        @include omega;
+      }
+    }
+  }
+}
+
+.alphabet-filter {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      margin-right: 5px;
+      margin-bottom: 5px;
+
+      a {
+        @include btn-secondary;
+      }
+    }
+  }
+}

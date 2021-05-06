@@ -1,0 +1,79 @@
+.gallery {
+    .gallery-item {
+      margin: 0;
+
+      a {
+        display: block;
+        border: 1px solid $brand-border !important;
+        padding: 3px;
+        border-radius: 2px;
+        opacity: 0.9;
+        margin-left: 5px;
+        overflow: hidden;
+        
+        @include media-breakpoint-up(md) {
+            height: 112px;
+        }
+
+        @include media-breakpoint-up(lg) {
+            height: 140px;
+        }
+
+        &:hover {
+          opacity: 1;
+          border: 1px solid darken($brand-border, 10%) !important;
+        }
+
+        img {
+          display: block;
+          border: none !important;
+          height: auto;
+          margin: auto;
+          max-height: 100%;
+          width: auto;
+        }
+      }
+
+      .wp-caption-text {
+        //display: none;
+      }
+    }
+}
+
+.wc-gallery {
+    margin: 20px 0 0;
+    
+    &:before {
+        @include title();
+        
+        content: "Fotogalerie";
+        display: block;
+        font-weight: 300;
+        margin-bottom: 10px;
+    }
+    
+    .gallery-caption {
+        min-width: 100%;
+    }
+}
+
+.wc-gallery-captions-onhover .gallery-item:hover .gallery-caption {
+    display: none;
+}
+
+// Reset some styles in gallery
+.format-gallery {
+    .wc-gallery {
+        &:before {
+            display: none;
+        }
+    }
+    
+    .wc-gallery-captions-onhover {
+        .gallery-item:hover {
+            .gallery-caption {
+                display: block;
+            }
+        }
+    }   
+}

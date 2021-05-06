@@ -1,0 +1,88 @@
+/*
+ * Susy base settings
+ */
+
+$susy: (
+  flow: ltr,
+  math: fluid,
+  output: float,
+  gutter-position: after,
+  container: $container,
+  container-position: center,
+  columns: $columns,
+  gutters: .45,
+  column-width: false,
+  global-box-sizing: content-box,
+  last-flow: to,
+  debug: (
+    image: hide,
+    color: rgba(#66f, .25),
+    output: background,
+    toggle: top right,
+  ),
+  use-custom: (
+    background-image: true,
+    background-options: false,
+    box-sizing: true,
+    clearfix: false,
+    rem: true,
+  )
+);
+
+/*
+ * Body base styles
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:400,700,900,400italic&subset=latin,latin-ext');
+
+
+
+* {
+    box-sizing: border-box;
+}
+
+.row {
+    @include media-breakpoint-up(sm) {
+        @include make-row();
+
+        overflow: inherit;
+    }
+
+    position: relative;
+    overflow: inherit;
+
+    .main {
+        // ToDo add mixin
+        padding-left: $grid-gutter-width-base / 2;
+        padding-right: $grid-gutter-width-base / 2;
+
+
+        @include media-breakpoint-up(lg) {
+            @include make-col(8.55);
+        }
+        
+        &.special {
+            width: 100%;
+            float: none;
+            
+            @include media-breakpoint-up(sm) {
+                padding: 0;
+            }
+        }
+    }
+
+    .sidebar {
+        // ToDo add mixin
+        padding-left: $grid-gutter-width-base / 2;
+        padding-right: $grid-gutter-width-base / 2;
+
+        @include media-breakpoint-up(lg) {
+            @include make-col(3.45);
+        }
+    }
+}
+
+.spacer {
+  clear: both;
+  min-height: 1px;
+}

@@ -1,0 +1,381 @@
+.content {
+    // Typography
+    &-page,
+    &-post {
+        @include media-breakpoint-up(md) {
+            margin-right: 15%;
+            font-size: 1.1rem;
+        }
+
+        p {
+            font-size: 1em;
+            line-height: 1.4em;
+            color: $brand-gray;
+            margin: 10px 0 0;
+            padding: 0;
+
+            & + ol, & + ul {
+                margin-top: 0;
+            }
+        }
+
+        b, strong {
+            color: $brand-primary;
+        }
+
+        a {
+            color: $brand-components;
+            &[rel*="attachment"] {
+                display: block;
+                width: 100%;
+
+                img {
+                    margin-bottom: 0;
+                }
+            }
+
+            img {
+                &.aligncenter {
+                    display: block;
+                    margin-top: $base-indent-top;
+                    margin-bottom: $base-indent-bottom;
+                }
+            }
+        }
+
+        // Responsive images
+        img {
+            max-width:100%;
+            height:auto;
+
+            &.alignleft {
+              float: left;
+              margin-right: $base-indent-right;
+              margin-bottom: $base-indent-bottom;
+            }
+
+            &.alignright {
+              float: right;
+              margin-left: $base-indent-left;
+              margin-bottom: $base-indent-bottom;
+            }
+
+            &.aligncenter {
+              margin-top: $base-indent-top;
+              margin-bottom: $base-indent-bottom;
+            }
+        }
+
+        // Titles
+        h2, h3, h4, h5, h6 {
+            margin-top: $base-indent-top;
+            margin-bottom: 0;
+            font-weight: 300;
+
+            & + p {
+                margin-top: 0;
+            }
+        }
+
+        h4, h5, h6 {
+            text-transform: uppercase;
+        }
+
+        table {
+            width: 100%;
+            margin: $base-indent-top 0;
+            border-collapse: collapse;
+
+            th {
+              text-transform: uppercase;
+              text-align: left;
+              border-bottom: 1px solid $brand-border;
+            }
+
+            tr {
+              th {
+                background-color: #eee;
+              }
+
+              td, th {
+                padding: 5px;
+                border: 1px solid $brand-border;
+              }
+            }
+        }
+
+        ul,
+        ol {
+            margin: 10px 0;
+            padding-left: 20px;
+            color: #000;
+            font-size: .9em;
+            color: $brand-gray-light;
+
+            li {
+              margin-bottom: 5px;
+            }
+        }
+
+        // Images with title
+        figure {
+            margin: 0;
+            padding: 0;
+            max-width: 100%;
+            margin-bottom: 10px;
+            margin-top: 10px;
+
+            &.alignleft {
+              float: left;
+              margin: 10px 20px 10px 0;
+            }
+
+            &.alignright {
+              float: right;
+              margin: 10px 0 10px 20px;
+            }
+
+            .wp-caption-text {
+              font-size: .9em;
+              color: $brand-gray-light;
+            }
+        }
+
+        // Polls
+        .wp-polls {
+            .wp-polls-ul {
+              margin: 10px 0;
+              padding: 0;
+
+              li {
+                margin-bottom: 10px;
+
+                label {
+                  margin-left: 5px;
+                  cursor: pointer;
+                }
+              }
+            }
+
+            .btn {
+              width: auto;
+              text-transform: uppercase;
+              font-size: .8em;
+            }
+        }
+
+        // Contest indent
+        .box-group {
+            .wpcf7-form {
+              margin-top: $base-indent-top;
+            }
+        }
+        
+        // Responsive youtube video
+        iframe {
+            max-width: 100%;
+            display: block;
+            
+            @include media-breakpoint-down(sm) {
+                height: 250px;
+            }
+            
+            @include media-breakpoint-down(xs) {
+                height: auto;
+            }
+        }
+    }
+}
+
+.content-thumbnail {
+    margin: 30px 0;
+}
+
+.excerpt {
+    font-size: 1.1em;
+    display: block;
+    margin-top: 10px;
+}
+
+.group {
+  &.group-inline.social {
+    @include pie-clearfix;
+
+    margin-top: $base-indent-top;
+
+    div {
+      vertical-align: top;
+
+      .fb-share-button {
+        span {
+          vertical-align: initial;
+        }
+      }
+    }
+  }
+}
+
+.yasr-visitor-votes {
+  .yasr-total-average-container {
+    display: none;
+  }
+}
+
+.tag-list,
+.breadcrumb {
+  text-transform: uppercase;
+  font-size: .9rem;
+  color: #888;
+  margin-bottom: $base-indent-bottom * 2;
+
+  a {
+    color: $brand-components;
+  }
+}
+
+.tag-list {
+    margin: 15px 0 10px;
+    position: relative;
+    padding-left: 60px;
+
+    span {
+        display: inline-block;
+        margin-right: 5px;
+        position: absolute;
+        left: 0;
+    }
+
+    a {
+        display: inline-block;
+        margin-bottom: 5px;
+        margin-right: 10px;
+    }
+}
+
+// Special
+.special {
+    .content {
+        &-post {
+            margin: 0;
+            
+            @include media-breakpoint-up(sm) {
+                width: 85%;
+                margin: auto;
+            }
+            
+            @include media-breakpoint-up(md) {
+                width: 75%;
+                margin: auto;
+            }
+        }
+        
+        &-thumbnail {
+            margin: 30px auto;
+            
+            img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+            }
+        }
+        
+        // First image in "Článek plus" is aligned to the middle of the page.
+        figure:first-of-type {
+            display: block;
+            
+            @media (min-width: 1101px) {
+                margin-left: -16.5%;
+                // Because figure automaticly add width of the img with px
+                width: 124% !important;
+            }
+            
+            img {
+                @media (min-width: 1100px) {
+                    max-width: initial !important;
+                }
+            }
+        }
+        
+        &-thumbnail-description {
+            color: #666;
+            font-size: .9rem;
+            margin-top: 5px;
+        }
+        
+        iframe {
+            max-width: 100%;
+            display: block;
+            height: 250px;
+            
+            @include media-breakpoint-up(md) {
+                height: 440px;
+            }
+        }
+        
+        &-header {
+            margin: auto;
+            
+            @include media-breakpoint-up(sm) {
+                width: 85%;
+                margin: auto;
+            }
+            
+            @include media-breakpoint-up(md) {
+                width: 75%;
+                margin: auto;
+            }
+        }
+    }
+}
+
+.format-gallery {
+    .content {
+        width: auto;
+        margin: 0;
+        
+        p, strong, em, i, b {
+            color: #fff;
+        }
+    }
+    
+    .ad-square {
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    }
+    
+    .gallery {
+        background-color: transparent;
+        border: none;
+        
+        &:before {
+            content: "";
+            border: none;
+        }
+                
+        .wp-caption-text {
+            background-color: rgba($brand-dark, .8);
+            color: #fff;
+        }
+        
+        &-item {
+            a {
+                border: none !important;
+            }
+        }
+    }
+    
+    .wcflexslider .slides img {
+        max-height: 500px;
+        width: auto;
+    }
+}
+
+// Instagram embed fix 
+.instagram-media {
+    margin: 10px 0 0 !important;
+    min-width: 100%;
+    position: inherit !important;
+}

@@ -1,0 +1,697 @@
+<?php
+add_action( 'init', 'stop_heartbeat', 1 );
+function stop_heartbeat() {
+wp_deregister_script('heartbeat');
+}
+/**
+ * Sage includes
+ *
+ * The $sage_includes array determines the code library included in your theme.
+ * Add or remove files to the array as needed. Supports child theme overrides.
+ *
+ * Please note that missing files will produce a fatal error.
+ *
+ * @link https://github.com/roots/sage/pull/1042
+ */
+$sage_includes = array (
+		'lib/utils.php', // Utility functions
+		'lib/init.php', // Initial theme setup and constants
+		'lib/wrapper.php', // Theme wrapper class
+		'lib/conditional-tag-check.php', // ConditionalTagCheck class
+		'lib/config.php', // Configuration
+		'lib/assets.php', // Scripts and stylesheets
+		'lib/titles.php', // Page titles
+		'lib/extras.php'
+); // Custom functions
+
+foreach ( $sage_includes as $file ) {
+	if (! $filepath = locate_template ( $file )) {
+		trigger_error ( sprintf ( __ ( 'Error locating %s for inclusion', 'sage' ), $file ), E_USER_ERROR );
+	}
+
+	require_once $filepath;
+}
+unset ( $file, $filepath );
+
+// support for distributed development
+if (defined ( 'WP_DEV' ) && WP_DEV) {
+	require "lib/url-rewrite.php";
+}
+function custom_excerpt_length($length) {
+	return 22;
+}
+
+add_filter ( 'excerpt_length', 'custom_excerpt_length', 999 );
+function paginate($current, $max, $urlBase) {
+	$result = '<ol class="wp-paginate">';
+	if ($current > 1) {
+		$url = sprintf ( '%s?pa=%d', $urlBase, $current - 1 );
+		$label = '‹ předchozí';
+		$result .= "<li><a class='prev' href='{$url}'>{$label}</a></li>";
+	}
+	for($i = 0; $i < $max; $i ++) {
+		$url = sprintf ( '%s?pa=%d', $urlBase, $i + 1 );
+		$label = $i + 1;
+		if ($i + 1 === $current) {
+			$result .= "<li><span class='page current'>{$label}</span></li>";
+		} else {
+			$result .= "<li><a class='page' href='{$url}'>{$label}</a></li>";
+		}
+	}
+	if ($current < $max) {
+		$url = sprintf ( '%s?pa=%d', $urlBase, $current + 1 );
+		$label = 'následující ›';
+		$result .= "<li><a class='next' href='{$url}'>{$label}</a></li>";
+	}
+	$result .= '</ol>';
+	return $result;
+}
+
+/**
+ * ID of category "Z kuluaru"
+ */
+function getCorridorsCategory() {
+	return array (
+			'84'
+	);
+}
+
+/**
+ * Array of cat ids for main post listing
+ *
+ * @return array
+ */
+function getMainCategories() {
+	return array (
+			9973, // Zpravy
+			9974, // Zpravy - Tanec
+			9975, // Zpravy - Hudba
+			9976, // Zpravy - Opera
+			9977, // Zpravy - Ruzne
+			33, // Hudba
+			32, // Opera
+			31, // Ruzne
+			30
+	); // // Tanec
+}
+
+function print_related_posts($post_id, $count = 6) {
+	$not = array (
+			$post_id
+	);
+
+	$gotCounter = 0;
+	$output = array ();
+
+	$taxonomies = array (
+			'souvisejici-clanky',
+			'serialy',
+			'jmenny_rejstrik',
+			'dila',
+			'vecny_rejstrik'
+	);
+	$taxonomiesFlipped = array_flip ( $taxonomies );
+	$args = array (
+			'orderby' => 'date'
+	);
+
+	$terms = wp_get_post_terms ( $post_id, $taxonomies, $args );
+	if (! is_array ( $terms )) {
+		$terms = array ();
+	}
+	usort ( $terms, function ($a, $b) use($taxonomiesFlipped) {
+		if ($taxonomiesFlipped [$a->taxonomy] < $taxonomiesFlipped [$b->taxonomy]) {
+			return - 1;
+		} elseif ($taxonomiesFlipped [$a->taxonomy] === $taxonomiesFlipped [$b->taxonomy]) {
+			return 0;
+		} else {
+			return 1;
+		}
+	} );
+
+	// TODO showposts could conflict with $count
+	foreach ( $terms as $term ) {
+		if ($gotCounter > $count) {
+			break;
+		}
+		$posts = get_posts ( array (
+				'showposts' => '10',
+				$term->taxonomy => $term->slug,
+				'post__not_in' => $not,
+				'post_type' => 'post'
+		) );
+		foreach ( $posts as $post ) {
+			if (++ $gotCounter > $count) {
+				break;
+			}
+			if (has_post_thumbnail ( $post->ID )) {
+				$thumbSrc = wp_get_attachment_image_src ( get_post_thumbnail_id ( $post->ID ) );
+				$thumbSrc = $thumbSrc [0];
+				$thumb = "<img src='{$thumbSrc}'/>";
+			}
+			$output [] = "<li class='souvisejici'>" . $thumb . "<a href='" . get_permalink ( $post ) . "' rel='bookmark' title='" . get_the_title ( $post ) . "'>" . get_the_title ( $post ) . "</a></li>\n\n";
+			$not [] = $post->ID;
+		}
+	}
+	if (! empty ( $output )) {
+		echo '<h3 class="box-title">Související články</h3><ul class="related">';
+		foreach ( $output as $item ) {
+			echo $item;
+		}
+		echo '</ul><div style="clear: both;"></div><br/>';
+	}
+}
+function content($text, $limit) {
+	$content = explode ( ' ', $text, $limit );
+	if (count ( $content ) >= $limit) {
+		array_pop ( $content );
+		$content = implode ( " ", $content ) . '...';
+	} else {
+		$content = implode ( " ", $content );
+	}
+	$content = preg_replace ( '/\[.+\]/', '', $content );
+	$content = str_replace ( ']]>', ']]&gt;', $content );
+	$content = strip_tags ( $content );
+	return $content;
+}
+function title_filter($where, &$wp_query) {
+	global $wpdb;
+
+	if ($search_term = $wp_query->get ( 'title_filter' )) {
+		/* using the esc_like() in here instead of other esc_sql() */
+		$search_term = $wpdb->esc_like ( $search_term );
+		$search_term = ' \'' . $search_term . '\'';
+		$where .= ' AND ' . $wpdb->posts . '.post_title LIKE ' . $search_term;
+	}
+
+	return $where;
+}
+function paginated_content($content, $allowedChars = 6000) {
+	$decomposition = [ ];
+	list ( $page, $max ) = parse_post_pagination ( $content, $decomposition, $allowedChars );
+	if ($page > 0 && $page <= $max) {
+		$content = implode ( PHP_EOL, $decomposition [$page - 1] );
+	}
+	$content = apply_filters ( 'the_content', $content );
+	$content = str_replace ( ']]>', ']]&gt;', $content );
+	return $content;
+}
+
+function parse_post_pagination($content, array &$paragraphsDecomposition, $allowedChars = 6000) {
+	$page = isset ( $_GET ['pa'] ) ? intval ( $_GET ['pa'] ) : 1;
+	//workaround
+	$content = str_replace("<br />\n", '<br />', $content);
+	$paragraphs = [ ];
+	$doc = new DOMDocument ( '1.0', 'UTF-8' );
+	@$doc->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));
+	$body = $doc->getElementsByTagName('body');
+
+	if ($body->length === 1) {
+		$bodyChilds = $body->item ( 0 )->childNodes;
+		$t = 0;
+		$index = 0;
+		$paragraphCounter = 0;
+		foreach ( $bodyChilds as $node ) {
+			if ('#text' !== $node->nodeName || ! empty ( trim ( $node->nodeValue ) )) {
+				$paragraph = $node->ownerDocument->saveHTML ( $node );
+				$length = mb_strlen ( strip_tags ( $paragraph ) );
+				$t += $length;
+				// change index and lengthCounter unless first paragraph
+				if ($t >= $allowedChars && $paragraphCounter > 0) {
+					$t = 0;
+					$index ++;
+				}
+				if (! isset ( $paragraphsDecomposition [$index] )) {
+					$paragraphsDecomposition [$index] = [ ];
+				}
+				$paragraphsDecomposition [$index] [] = $paragraph;
+				$paragraphCounter++;
+			}
+		}
+
+		return array (
+				$page,
+				count ( $paragraphsDecomposition )
+		);
+	}
+
+	return array (
+			$page,
+			$max
+	);
+}
+
+function old_gallery_support($content) {
+	$matches = array ();
+	$matchesImages = array ();
+	// TODO performance leak
+	$result= $content;
+	$replacement = [];
+	if (preg_match_all( '/\+\+\+(.+)===/', $content, $matches ) > 0) {
+		foreach ($matches[1] as $galleryContent) {
+			if (preg_match_all ( '/wp-image-([0-9]+)/', $galleryContent, $matchesImages ) > 0) {
+				$replacement[] = do_shortcode ( '[gallery ids="' . implode ( ',', $matchesImages[1] ) . '"]' );
+			}
+		}
+		$result = str_replace($matches[0], $replacement, $content);
+	}
+	return $result;
+}
+
+// TODO migrate to custom plugin dependent on: Advanced Ads
+$showedAds = array ();
+function ads_filter($ordered_ad_ids, $type, $ads, $weights) {
+	global $showedAds;
+	return array_diff ( $ordered_ad_ids, $showedAds );
+}
+function ads_showed($adsArgs) {
+	global $showedAds;
+	$showedAds [] = $adsArgs ['id'];
+	return $adsArgs;
+}
+function display_taxonomy_listing_callback($atts, $content, $tag) {
+	// TODO: if not isset
+	$taxonomy = $atts ['taxonomy'];
+	$terms = get_terms ( $taxonomy, array (
+			'orderby' => 'name'
+	) );
+	ob_start ();
+	$lastChar = '';
+	mb_internal_encoding ( "UTF-8" );
+	$filter = isset ( $_GET ['filter'] ) ? $_GET ['filter'] : '';
+	echo "<ul class='taxonomy-register-listing'>";
+	foreach ( $terms as $term ) {
+
+		if (($temp = strtoupper ( mb_substr ( $term->name, 0, 1 ) )) !== $lastChar) {
+			if (empty ( $filter )) {
+				if ($lastChar !== '') {
+					echo '</ul></li>';
+				}
+				$lastChar = $temp;
+				echo "<li class='taxonomy-register-group'>
+					<span class='taxonomy-register-group-label'>{$lastChar}</span>
+					<ul>";
+			}
+		}
+		if (empty ( $filter ) || $temp === $filter) {
+			$term_link = get_term_link ( $term );
+			echo "<li class='taxonomy-register-item'><a href='{$term_link}'>{$term->name}</a></li>";
+		}
+	}
+	echo "</ul>";
+	/*
+	 * if (! empty ( $filter )) {
+	 * $backUrl = dirname ( $_SERVER ['REQUEST_URI'] );
+	 * echo "<br/><div><a class='btn-secondary' href='{$backUrl}'>zpět</a></div>";
+	 * }
+	 */
+	$result = ob_get_contents ();
+	ob_end_clean ();
+	return $result;
+}
+function display_rating_listing_callback($atts, $content, $tag) {
+	$type = $atts ['type'];
+	$archive = in_array ( 'archive', $atts );
+	$postType = 'hodn-' . $type;
+	$terms = get_terms ( "soubor", 'hide_empty=1&orderby=slug' );
+	foreach ( $terms as $term ) {
+		ob_start ();
+		if ($term->description != $type) {
+			// ignore unmatched rating types
+			continue;
+		}
+
+		$args = array (
+				'post_type' => $postType,
+				'posts_per_page' => - 1,
+				'taxonomy' => "soubor",
+				'order' => "ASC",
+				'post_status' => 'publish',
+				'orderby' => "meta_value",
+				'term' => $term->slug,
+				'meta_key' => 'hodnoceni_titul'
+		);
+		if ($archive) {
+			$args ['meta_query'] = array (
+					'relation' => 'AND',
+					array (
+							'key' => 'hodnoceni_archiv',
+							'value' => '1',
+							'compare' => '='
+					)
+			);
+		}
+		$termPosts = get_posts ( $args );
+
+		if ($archive && empty ( $termPosts )) {
+			// ignore empty ratings
+			continue;
+		}
+
+		$termUrl = get_term_link ( $term );
+		echo "<h3><a href='{$termUrl}'>{$term->name}</a></h3>";
+		echo "<ul class='rating-list'>";
+		foreach ( $termPosts as $post ) {
+			$premiere = get_post_meta ( $post->ID, 'hodnoceni_premiera', true );
+			if (! empty ( $premiere )) {
+				$premiere = "($premiere)";
+			}
+
+			$note = get_post_meta ( $post->ID, 'hodnoceni_poznamka', true );
+			if (! empty ( $note )) {
+				$note = "<div>($note)</div>";
+			}
+
+			$title = get_post_meta ( $post->ID, 'hodnoceni_titul', true );
+			$author = get_post_meta ( $post->ID, 'hodnoceni_autor', true );
+			echo "<li><strong>$title</strong> - $author $premiere";
+			// render rating
+			echo do_shortcode ( '[yasr_visitor_votes postid="' . $post->ID . '" size="small"]' );
+			echo $note;
+
+			// related posts
+			$args = array (
+					'orderby' => 'post_date',
+					'order' => 'DESC',
+					'post_type' => 'post',
+					'post_status' => 'publish',
+					'meta_query' => array (
+							array (
+									'key' => 'hodnoceni_id',
+									'value' => $post->ID,
+									'compare' => 'LIKE'
+							)
+					)
+			);
+			$posts = get_posts ( $args );
+			if (! empty ( $posts )) {
+				// TODO localization support
+				echo "<h5 class='related-posts-list-title'>Související články:</h5><ul class='related-posts-list'>";
+				foreach ( $posts as $relatedPost ) {
+					$url = get_permalink ( $relatedPost->ID );
+					echo "<li><a href='{$url}'>{$relatedPost->post_title}</a></li>";
+				}
+				echo "</ul>";
+			}
+			echo "<br/></li>";
+			// flush output buffer
+			ob_end_flush ();
+		}
+		echo "</ul>";
+	}
+}
+function display_taxonomy_filter($atts, $content, $tag) {
+	// TODO validation of $atts
+	extract ( $atts );
+	$terms = get_terms ( $taxonomy, array (
+			'orderby' => 'name'
+	) );
+	$alphabetMap = array ();
+	$lastChar = '';
+	mb_internal_encoding ( "UTF-8" );
+	foreach ( $terms as $term ) {
+		if (($temp = strtoupper ( mb_substr ( $term->name, 0, 1 ) )) !== $lastChar) {
+			$lastChar = $temp;
+			$alphabetMap [$lastChar] = 0;
+		}
+		$alphabetMap [$lastChar] ++;
+	}
+	$baseUrl = get_permalink ();
+	ob_start ();
+	echo '<div class="alphabet-filter"><ul>';
+	foreach ( $alphabetMap as $key => $value ) {
+		$url = $baseUrl . '?filter=' . htmlentities ( $key );
+		echo "<li><a href='{$url}'>{$key}</a></li>"; /* ({$value}) */
+	}
+	echo '</ul></div>';
+	$result = ob_get_contents ();
+	ob_end_clean ();
+	return $result;
+}
+function category_permalink_filter($termlink, $term, $taxonomy) {
+	$return = $termlink;
+	if ($taxonomy === 'category') {
+		$parts = explode ( '/', $termlink );
+		// $categoryBase = get_option ( 'category_base' );
+		// performance issue
+		$categoryBase = 'archiv-clanku';
+		$beforeLastItem = count ( $parts ) - 3;
+		if ($parts [$beforeLastItem] !== $categoryBase) {
+			unset ( $parts [$beforeLastItem] );
+		}
+		$return = implode ( '/', $parts );
+	}
+
+	return $return;
+}
+function get_image_url(&$content) {
+	$matches = array ();
+	preg_match ( '/<img .* src="([^"]+)".*/', $content, $matches );
+	if (isset ( $matches [1] )) {
+		return $matches [1];
+	} else {
+		return '';
+	}
+}
+
+function uniqueSlugAllPostTypes($slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug)
+{
+	global $wpdb;
+
+	$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name = %s AND ID != %d LIMIT 1";
+	$post_name_check = $wpdb->get_var($wpdb->prepare($check_sql, $slug, $post_ID));
+	if ($post_name_check) {
+		$suffix = 2;
+		do {
+			$alt_post_name = _truncate_post_slug($slug, 200 - (strlen($suffix) + 1)) . "-$suffix";
+			$post_name_check = $wpdb->get_var($wpdb->prepare($check_sql, $alt_post_name, $post_ID));
+			$suffix++;
+		} while ($post_name_check);
+		$slug = $alt_post_name;
+	}
+	return $slug;
+}
+
+// Removed "Zaujalo nás" category from RSS
+function myFilter($query) {
+	if ($query->is_feed) {
+		$query->set('cat','-28, -12689'); //Don't forget to change the category ID
+	}
+	return $query;
+}
+add_filter('pre_get_posts','myFilter');
+
+add_shortcode ( 'display_taxonomy', 'display_taxonomy_listing_callback' );
+add_shortcode ( 'taxonomy_filter', 'display_taxonomy_filter' );
+add_shortcode ( 'display_rating', 'display_rating_listing_callback' );
+
+add_filter ( 'advanced-ads-group-output-ad-ids', 'ads_filter', 10, 4 );
+add_filter ( 'advanced-ads-ad-select-args', 'ads_showed', 10, 1 );
+
+add_filter ( 'posts_where', 'title_filter', 10, 2 );
+add_filter ( 'the_content', 'old_gallery_support', 99 );
+// add_filter ( 'term_link', 'category_permalink_filter', 10, 3 );
+add_filter('wp_unique_post_slug', 'uniqueSlugAllPostTypes', 10, 6);
+
+
+// Shortcodes
+// At first add the button for custom formats to a menu bar of TinyMCE, in example line 2 with hook
+add_filter( 'mce_buttons_2', 'fb_mce_editor_buttons' );
+
+function fb_mce_editor_buttons( $buttons ) {
+	array_unshift( $buttons, 'styleselect' );
+	return $buttons;
+}
+
+// Then enhance the drop down of this button. Aslo useful the enancement via additional value in the array, see the codex for this example.
+add_filter( 'tiny_mce_before_init', 'fb_mce_before_init' );
+
+function fb_mce_before_init( $settings ) {
+	$style_formats = array(
+		array(
+			'title' => 'Upozornení',
+			'block' => 'div',
+			'classes' => 'alert alert-warning',
+			'wrapper' => true
+		),
+		array(
+			'title' => 'Chyba',
+			'block' => 'div',
+			'classes' => 'alert alert-danger',
+			'wrapper' => true
+		),
+		array(
+			'title' => 'Úspěch',
+			'block' => 'div',
+			'classes' => 'alert alert-success',
+			'wrapper' => true
+		),
+		array(
+			'title' => 'Informace',
+			'block' => 'div',
+			'classes' => 'alert alert-info',
+			'wrapper' => true
+		),
+		array(
+			'title' => 'Blok základní',
+			'block' => 'div',
+			'classes' => 'block block-default',
+			'wrapper' => true
+		),
+		array(
+			'title' => 'Blok upozornění',
+			'block' => 'div',
+			'classes' => 'block block-warning',
+			'wrapper' => true
+		)
+		/*array(
+			'title' => 'Red Uppercase Text',
+			'inline' => 'span',
+			'styles' => array(
+				'color'         => 'red', // or hex value #ff0000
+				'fontWeight'    => 'bold',
+				'textTransform' => 'uppercase'
+			)
+		)*/
+	);
+
+	$settings['style_formats'] = json_encode( $style_formats );
+
+	return $settings;
+
+}
+
+// Add styles to login page
+function my_login_stylesheet() {
+	global $hash;
+
+	wp_enqueue_style( 'login-styles',
+		get_stylesheet_directory_uri() . '/build/css/wp-login.css',
+		null,
+		$hash
+	);
+}
+
+add_action( 'login_enqueue_scripts', 'my_login_stylesheet' );
+
+// Add styles to administration
+function my_custom_fonts() {
+	global $hash;
+
+	wp_enqueue_style( 'wp-styles',
+		get_stylesheet_directory_uri() . '/build/css/wp-admin.css',
+		null,
+		$hash
+	);
+}
+
+function opArgVal($arr, $key, $default) {
+	if(isset($arr[$key])) {
+		return $arr[$key];
+	} else {
+		return $default;
+	}
+}
+
+/*
+ $meta_key
+ $meta_value
+ $exclude_post_ids
+ $exclude_category_ids
+ $posts_limit
+ 
+ */
+// Returns list of posts by advanced field
+function get_opera_sel_posts($args) {
+	
+	global $wpdb;
+	
+	
+	$meta_key = opArgVal($args, 'meta_key', ''); 
+	$meta_value = opArgVal($args, 'meta_value', '');
+	$post_ids = opArgVal($args, 'post_ids', '');
+	$exclude_post_ids = opArgVal($args, 'exclude_post_ids', '');
+	$exclude_category_ids = opArgVal($args, 'exclude_category_ids', '');
+	$posts_limit = opArgVal($args, 'posts_limit', 5);
+	$debug = opArgVal($args, 'debug', 0);
+
+	// parsing arguments
+	$where = '';
+	
+	if (($meta_key != "") && ($meta_value != "")) {
+		$where .= " and pm.meta_key like '$meta_key' and pm.meta_value like '$meta_value' ";
+	}
+	
+	if (is_array($exclude_category_ids)) {
+		$where .= " and tt.term_id not in (" . implode(',', $exclude_category_ids) . ") ";
+	}
+	
+	if (is_array($exclude_post_ids)) {
+		$where .= " and p.ID not in (" . implode(',', $exclude_post_ids) . ") ";
+	}
+	
+	if (is_array($post_ids)) {
+		$where .= " and p.ID in (" . implode(',', $post_ids) . ") ";
+	}	
+	
+	$limit = " limit 10 ";
+	
+	if ($posts_limit != '') {
+		$limit = "limit $posts_limit";
+	}
+	
+	$sql = "select * from $wpdb->postmeta pm
+			left join $wpdb->posts p on p.id = pm.post_id
+			LEFT JOIN $wpdb->term_relationships tr ON p.ID = tr.object_id
+			LEFT JOIN $wpdb->term_taxonomy tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+			where
+			p.post_type = 'post' and p.post_status = 'publish'
+			$where
+			group by p.id
+			order by p.post_date desc 
+			$limit";
+	
+	if ($debug) { echo "<p>" . $sql . "<p>"; }
+	
+	return $wpdb->get_results($sql, OBJECT);
+}
+
+
+
+add_action('admin_head', 'my_custom_fonts');
+
+// Exclude some categories from RSS feed
+function exclude_category($query) {
+	if ( $query->is_feed ) {
+		$query->set('cat', '-10250, -8241, -16, -12689, -28');
+	}
+	
+	return $query;
+}
+
+add_filter('pre_get_posts', 'exclude_category');
+
+function disable_tag_feed () {
+	if (strrpos($link, '/tags/') > 0)
+		return;
+		else
+			return $link;
+}
+add_filter('category_feed_link', 'disable_tag_feed');
+
+add_action( 'init', 'stop_heartbeat', 1 );
+
+add_filter( 'shortcode_atts_wpcf7', 'custom_shortcode_atts_wpcf7_filter', 10, 3 );
+
+function custom_shortcode_atts_wpcf7_filter( $out, $pairs, $atts ) {
+	$my_attr = 'post_id';
+
+	if ( isset( $atts[$my_attr] ) ) {
+		$out[$my_attr] = $atts[$my_attr];
+	}
+
+	return $out;
+}
+
+
+require "lib/wp-admin-extension.php";

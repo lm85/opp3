@@ -1,0 +1,25 @@
+@mixin breakpoint($breakpoint) {
+  @if $breakpoint == "wide" {
+    @media (min-width: $container--wide) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint == "medium" {
+    @media (min-width: $container--medium) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint == "small" {
+    @media (min-width: $container--small) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint == "mobile" {
+    @media (min-width: $container--mobil) {
+      @content;
+    }
+  }
+}

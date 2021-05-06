@@ -1,0 +1,85 @@
+footer {
+  .box-title {
+    font-size: 1rem;
+  }
+}
+
+.footer-items {
+    margin-top: $base-indent;
+    background-color: #F5F5F5;
+    padding: 20px 15px;
+    
+    .footer-item {
+        margin-bottom: 20px;
+        
+        ul {
+            @include pie-clearfix;
+            
+            font-size: 1rem;
+            list-style: none;
+            padding: 0;
+            margin: $base-indent-top 0 0;
+        }
+        
+        li {
+            margin-bottom: 5px;
+            width: 48%;
+            float: left;
+            padding-right: 1%;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    }
+}
+
+
+// Cookie bar
+#eu-cookie-bar {
+	display: none;
+	direction: ltr;
+	color: #ffffff;
+	min-height: 20px;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	z-index: 99999;
+	padding:3px 20px 2px;
+	background-color: #2e363f;
+	text-align: center;
+	font-size: 12px;
+}
+#eu-cookie-bar a {
+	color: #ffffff;
+	text-decoration: underline;
+}
+button#euCookieAcceptWP {
+	margin:0 10px;
+	line-height:20px;
+	background:#45AE52;
+	border:none;
+	color: #ffffff;
+	padding:2px 12px;
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#eu-cookie-bar {
+    padding: 7px 0;
+    background-color: #3F3D38;
+    font-family: "Alegreya Sans",Arial,serif;
+    font-size: 13px;
+
+    #euCookieAcceptWP {
+      font-weight: normal;
+      text-transform: uppercase;
+      padding: 2px 6px;
+  }
+}
+
