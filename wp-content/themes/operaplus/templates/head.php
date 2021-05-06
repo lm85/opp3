@@ -1,4 +1,5 @@
 <?php
+//lmm
 global $post;
 if (get_post_meta($post->ID,OPERAPLUS_PREFIX.'disable_cache',true) == 'on') {
     header('Expires: Sun, 01 Jan 2014 00:00:00 GMT');
