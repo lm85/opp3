@@ -59,7 +59,7 @@ wpp_get_mostpopular( 'range="last30days"&limit=6&post_type="post"' );
 	if(function_exists('the_ad_placement')) the_ad_placement('reklama-ad-2'); ?>
 </div>
 
-<?php get_template_part('templates/sidebar/sidebar-anniversary'); ?>
+<?php //get_template_part('templates/sidebar/sidebar-anniversary'); ?>
 
 <!-- Square-300x250 #3 -->
 <div class="ad-square"><?php
